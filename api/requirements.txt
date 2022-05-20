@@ -1,4 +1,4 @@
 scikit-learn==1.0.2
 nltk==3.7
 flask==2.1.2
-# "import nltk; nltk.download('omw-1.4'); nltk.download('wordnet')"
+# "import nltk; nltk.download('omw-1.4'); nltk.download('wordnet'); nltk.download('stopwords')"
