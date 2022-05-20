@@ -2,7 +2,9 @@ import re
 import pickle 
 from  nltk.stem import WordNetLemmatizer 
 from nltk.corpus import stopwords
+from application_logging import logger
 
+logg = logger.App_Logger()
 
 # defining dictionary containing all emojis with their meaning, 
 emojis = {
@@ -14,11 +16,28 @@ emojis = {
 lemmatizer = WordNetLemmatizer()
 # grouping toghther the inflected form ('better.>good)
 stopwords = set(stopwords.words('english'))
-with open('models/pipeline.pickle', 'rb') as f:
-    loaded_pipe = pickle.load(f)
 
+def load_model(model_path):
+    with open(model_path, 'rb') as f:
+        try:
+            model = pickle.load(f)
+            lo = open('application_logfiles/training2.txt', 'a+')
+            logg.log(lo, "Model is loaded")
+            return model
+        except:
+            lo = open('application_logfiles/errors.txt', 'w+')
+            logg.log(lo, "MOdel path is not correct.")
+
+# with open('./models/pipeline.pickle', 'rb') as f:
+#     try:
+#         loaded_pipe = pickle.load(f)
+#         good_model = open('application_logfiles/trainning.txt', 'a+')
+#         logg.log(good_model, "Model is loaded.")
+#     except:
+#         bad_model = open('error_logs.txt', 'a+')
+#         logg.log(bad_model, "MOdel is not loaded .")
 def predict_pipeline(text):
-    return predict(loaded_pipe, text)
+    return predict(load_model('./models/pipeline.pickle'), text)
 
 def preprocess(textdata):
     processed_texts = []

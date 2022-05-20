@@ -3,9 +3,8 @@ version: '3.7'
 services:
   mlapp:
     container_name: mlapp
-    image: sanjeev/mlapp
+    image: sanjeev49/nlp_app
     ports:
       - "5000:5000"
     build: 
       dockerfile: Dockerfile
-      
