@@ -37,7 +37,7 @@ def load_model(model_path):
 #         bad_model = open('error_logs.txt', 'a+')
 #         logg.log(bad_model, "MOdel is not loaded .")
 def predict_pipeline(text):
-    return predict(load_model('./models/pipeline.pickle'), text)
+    return predictt(load_model('./models/pipeline.pickle'), text)
 
 def preprocess(textdata):
     processed_texts = []
@@ -72,7 +72,7 @@ def preprocess(textdata):
     return processed_texts
 
 
-def predict(model, text):
+def predictt(model, text):
     # predict the sentiment
     preprocessed_text = preprocess(text)
     predictions = model.predict(preprocessed_text)
@@ -89,3 +89,5 @@ def predict(model, text):
 #            "Mr. stark, I don't feel so good. "]
 #     predictions = predict_pipeline(text)
 #     print(predictions)
+predictions = predict_pipeline(text=["what are you doing."])
+print(predictions)
