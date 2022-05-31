@@ -85,9 +85,10 @@ def predictt(model, text):
 # if __name__ == "__main__":
 #     # Text to classify shold be in a list 
 #     text = ["I hate something", 
-#            "May the force bad bad bad.",
+#            "  May the force bad bad bad.",
 #            "Mr. stark, I don't feel so good. "]
+#     print(text)
 #     predictions = predict_pipeline(text)
 #     print(predictions)
-predictions = predict_pipeline(text=["what are you doing."])
-print(predictions)
+# predictions = predict_pipeline(text=["what are you doing."])
+# print(predictions)

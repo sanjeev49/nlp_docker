@@ -1,56 +1,45 @@
 from crypt import methods
 from distutils.log import debug
 import json
-from unittest import result
-from flask import Flask, jsonify, request , render_template
+# from matplotlib import projections
+# from more_itertools import sample
 
+from numpy import require
+from flask import Flask , request, jsonify, render_template
 from utilities import predict_pipeline
 
 app = Flask(__name__)
 
-# @app.route('/')
-# def main():
-#     return render_template('index.html')
-
-# @app.route('/predict')
+@app.route('/')
+def main():
+    return render_template('predict.html')
 
 
+@app.route("/predict", methods=['POST'])
+#@cross_origin()
+def predictRoute():
+    data = request.json['data']
+    data = data.split(".")
+    print(data)
+    result = predict_pipeline(data)
+    return jsonify({ "text" : result})
+    
+
+# @app.route('/predict', methods = ['GET','POST'])
 # def predict():
 #     if request.method == 'POST':
-#         data = request.form.get_items()
-#         print(data)
-#     else:
-#         print('not a post request')
-#         return render_template('index.html')
-
-
-@app.post('/predict')
-def predict():
-    data = request.json
-    try:
-        sample = data['text']
-    except KeyError:
-        return jsonify({'error':'No text was sent'})
-    sample = [sample]
-    predictions = predict_pipeline(sample)
-    try:
-        result = jsonify(predictions[0])
-    except TypeError as e:
-        result =  jsonify({'error', str(e)})
-    return result
+#         try:
+#             sample  = request.form.get('fname')
+#         except:
+#             jsonify({"error", str(e)})
+#         try:
+#             if type(sample) == str:
+#                 text = sample
+#         except:
+#             jsonify({'error', str(e)})
+#     sample = [text]
+#     predictions = predict_pipeline(sample)
+#     return jsonify(predictions)
 
 if __name__ == '__main__':
-    app.run(host = '0.0.0.0', debug = True)
-
-# if __name__ == '__main__':
-#     app.run(debug= True)
-
-# to check the api 
-# curl -X POST -H "Content-Type: application/json" -d '{"text":"You are most horrible person i have ever met"}' 0.0.0.0:5000/predict
-# write this command . 
-# def pred():
-    
-#     sample = ["hi what is your name", "where are you going", "he is such a bad person"]
-#     predictions = predict_pipeline(sample)
-#     print(predictions[0])
-# pred()
+    app.run(port = 7000, host = '0.0.0.0', debug = True)
