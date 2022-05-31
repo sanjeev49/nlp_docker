@@ -1,9 +1,5 @@
-from crypt import methods
-from distutils.log import debug
-import json
-# from matplotlib import projections
-# from more_itertools import sample
 
+import json
 from numpy import require
 from flask import Flask , request, jsonify, render_template
 from utilities import predict_pipeline
