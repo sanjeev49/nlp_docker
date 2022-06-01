@@ -1,5 +1,5 @@
 from flask import Flask , request, jsonify, render_template
-from utilities import predict_pipeline
+from nlp_utils.utilities import predict_pipeline
 
 app = Flask(__name__)
 
@@ -37,3 +37,5 @@ def predictRoute():
 
 if __name__ == '__main__':
     app.run(host = '0.0.0.0', debug = True)
+
+#CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
