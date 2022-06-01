@@ -1,6 +1,3 @@
-
-import json
-from numpy import require
 from flask import Flask , request, jsonify, render_template
 from utilities import predict_pipeline
 
@@ -14,9 +11,10 @@ def main():
 @app.route("/predict", methods=['POST'])
 #@cross_origin()
 def predictRoute():
+    """This method takes no argumet 
+    returns: predicted value of text, positive negative. """
     data = request.json['data']
     data = data.split(".")
-    print(data)
     result = predict_pipeline(data)
     return jsonify({ "text" : result})
     
@@ -38,4 +36,4 @@ def predictRoute():
 #     return jsonify(predictions)
 
 if __name__ == '__main__':
-    app.run(port = 7000, host = '0.0.0.0', debug = True)
+    app.run(host = '0.0.0.0', debug = True)

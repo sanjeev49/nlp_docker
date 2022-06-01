@@ -18,6 +18,10 @@ lemmatizer = WordNetLemmatizer()
 stopwords = set(stopwords.words('english'))
 
 def load_model(model_path):
+    """This function load the model from the model_path, 
+        This model takes the paraemter of model_path
+        returns: loaded_model
+        on_failure: create an exception. """
     with open(model_path, 'rb') as f:
         try:
             model = pickle.load(f)
@@ -28,18 +32,15 @@ def load_model(model_path):
             lo = open('application_logfiles/errors.txt', 'w+')
             logg.log(lo, "MOdel path is not correct.")
 
-# with open('./models/pipeline.pickle', 'rb') as f:
-#     try:
-#         loaded_pipe = pickle.load(f)
-#         good_model = open('application_logfiles/trainning.txt', 'a+')
-#         logg.log(good_model, "Model is loaded.")
-#     except:
-#         bad_model = open('error_logs.txt', 'a+')
-#         logg.log(bad_model, "MOdel is not loaded .")
+
+
 def predict_pipeline(text):
     return predictt(load_model('./models/pipeline.pickle'), text)
 
 def preprocess(textdata):
+    """This function work is to process the raw data 
+        It takes the input as raw data and process it . 
+        returns the processed text . """
     processed_texts = []
     # Defining regex patterns 
     url_pattern = r"((http://)[^ ]*|(https://)[^ ]*|( www\.)[^ ]*)"
@@ -73,7 +74,10 @@ def preprocess(textdata):
 
 
 def predictt(model, text):
-    # predict the sentiment
+    """This function predicts the result . 
+        Input: takes model and text as input . 
+        returns: predicted value in terms of positive and negative .
+        on_failure: program crashes. """
     preprocessed_text = preprocess(text)
     predictions = model.predict(preprocessed_text)
     pred_to_label = {0:'Negative', 1:'Positive'}
@@ -82,6 +86,8 @@ def predictt(model, text):
     for t, pred in zip(text, predictions):
         data.append({'text':t,'pred': int(pred),'label': pred_to_label[pred]})
     return data 
+
+
 # if __name__ == "__main__":
 #     # Text to classify shold be in a list 
 #     text = ["I hate something", 
